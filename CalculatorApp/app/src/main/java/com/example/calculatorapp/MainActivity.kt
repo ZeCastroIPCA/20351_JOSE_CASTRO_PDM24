@@ -75,6 +75,7 @@ fun Calculator() {
         ) {
             Text(
                 text = display,
+                // using sp because it adjusts in context with the user font's size settings
                 fontSize = 36.sp,
                 textAlign = TextAlign.End,
                 modifier = Modifier
@@ -126,6 +127,10 @@ fun Calculator() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            // check if number is the first number
+            // if not, display it
+            // if so, concatenate the number to the previous
+            // this applies for all number
             CalculatorButton("1") { if (newNumber) display = "1" else display += "1"; newNumber = false }
             CalculatorButton("2") { if (newNumber) display = "2" else display += "2"; newNumber = false }
             CalculatorButton("3") { if (newNumber) display = "3" else display += "3"; newNumber = false }
@@ -143,6 +148,9 @@ fun Calculator() {
             CalculatorButton("0") { if (display != "0") if (newNumber) display = "0" else display += "0" }
             CalculatorButton(".") { if (!display.contains(".")) display += "." }
             CalculatorButton("=") {
+                // check if operation has a value
+                // then do the operation
+                // val == const in js
                 val result = when (operation) {
                     "+" -> firstNumber.toFloat() + display.toFloat()
                     "-" -> firstNumber.toFloat() - display.toFloat()
@@ -150,6 +158,7 @@ fun Calculator() {
                     "÷" -> firstNumber.toFloat() / display.toFloat()
                     else -> display.toFloat()
                 }
+                // check if number is decimal
                 display = if (result % 1 == 0f) result.toInt().toString() else result.toString()
                 newNumber = true
             }
