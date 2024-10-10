@@ -99,6 +99,10 @@ fun Calculator() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            // check if number is the first number
+            // if not, display it
+            // if so, concatenate the number to the previous
+            // this applies for all number
             CalculatorButton("7") { if (newNumber) display = "7" else display += "7"; newNumber = false }
             CalculatorButton("8") { if (newNumber) display = "8" else display += "8"; newNumber = false }
             CalculatorButton("9") { if (newNumber) display = "9" else display += "9"; newNumber = false }
@@ -127,10 +131,6 @@ fun Calculator() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // check if number is the first number
-            // if not, display it
-            // if so, concatenate the number to the previous
-            // this applies for all number
             CalculatorButton("1") { if (newNumber) display = "1" else display += "1"; newNumber = false }
             CalculatorButton("2") { if (newNumber) display = "2" else display += "2"; newNumber = false }
             CalculatorButton("3") { if (newNumber) display = "3" else display += "3"; newNumber = false }
@@ -179,6 +179,7 @@ fun CalculatorButton(
 ) {
     Button(
         onClick = onClick,
+        // get the color of the button from the buttonColor parameter
         colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
