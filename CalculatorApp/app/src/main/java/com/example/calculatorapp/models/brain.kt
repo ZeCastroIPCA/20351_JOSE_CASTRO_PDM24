@@ -7,7 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 @Composable
-fun Calculator() {
+fun CalculatorBrain() {
     var display by remember { mutableStateOf("0") }
     var operation by remember { mutableStateOf("") }
     var firstNumber by remember { mutableStateOf("") }
