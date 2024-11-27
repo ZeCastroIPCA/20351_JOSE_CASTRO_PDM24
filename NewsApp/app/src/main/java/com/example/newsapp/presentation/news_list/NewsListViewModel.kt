@@ -1,6 +1,5 @@
 package com.example.newsapp.presentation.news_list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.data.remote.api.RetrofitInstance
@@ -16,14 +15,17 @@ class NewsListViewModel : ViewModel() {
     private val getNewsUseCase = GetNewsUseCase(repository)
 
     val news = MutableStateFlow<List<News>>(emptyList())
+    val isLoading = MutableStateFlow(false)
 
-    fun fetchNews () {
+    fun fetchNews() {
         viewModelScope.launch {
+            isLoading.value = true
             try {
                 news.value = getNewsUseCase()
             } catch (e: Exception) {
-                //Log.e("Error: ", e.toString())
                 news.value = emptyList()
+            } finally {
+                isLoading.value = false
             }
         }
     }

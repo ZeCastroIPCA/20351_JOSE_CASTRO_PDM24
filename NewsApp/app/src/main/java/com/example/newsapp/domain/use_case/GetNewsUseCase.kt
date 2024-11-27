@@ -12,7 +12,7 @@ class GetNewsUseCase(private val repository: NewsRepository) {
 }
 
 class GetNewsDetailUseCase(private val repository: NewsDetailRepository) {
-    suspend operator fun invoke(): NewsDetail {
-        return repository.getNewsDetail()
+    suspend operator fun invoke(newsId: String): NewsDetail {
+        return repository.getNewsDetail(newsId)
     }
 }

@@ -8,5 +8,5 @@ interface NewsRepository {
 }
 
 interface NewsDetailRepository {
-    suspend fun getNewsDetail(): NewsDetail
+    suspend fun getNewsDetail(newsId: String): NewsDetail
 }

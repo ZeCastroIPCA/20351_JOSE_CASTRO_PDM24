@@ -7,6 +7,7 @@ import com.example.newsapp.data.remote.api.RetrofitInstance
 import com.example.newsapp.data.repository.NewsDetailRepositoryImpl
 import com.example.newsapp.domain.model.NewsDetail
 import com.example.newsapp.domain.use_case.GetNewsDetailUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class NewsDetailViewModel : ViewModel() {
@@ -14,19 +15,12 @@ class NewsDetailViewModel : ViewModel() {
     private val repository = NewsDetailRepositoryImpl(api)
     private val getNewsDetailUseCase = GetNewsDetailUseCase(repository)
 
-    var news : NewsDetail = NewsDetail(
-        id = "",
-        title = "",
-        description = "",
-        date = "",
-        imageUrl = "",
-        source = ""
-    )
+    var news = MutableStateFlow<NewsDetail?>(null)
 
-    fun fetchIndividualNews () {
+    fun fetchIndividualNews (newsId: String) {
         viewModelScope.launch {
             try {
-                news = getNewsDetailUseCase()
+                news.value = getNewsDetailUseCase(newsId)
             } catch (e: Exception) {
                 Log.e("Error: ", e.toString())
             }

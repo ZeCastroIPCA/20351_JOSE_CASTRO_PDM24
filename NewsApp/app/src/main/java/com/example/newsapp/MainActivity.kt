@@ -10,6 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.newsapp.presentation.news_detail.NewsDetailScreen
+import com.example.newsapp.presentation.news_detail.NewsDetailViewModel
 import com.example.newsapp.presentation.news_list.NewsListScreen
 import com.example.newsapp.presentation.news_list.NewsListViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
@@ -34,6 +36,11 @@ fun MainScreen() {
         val newsListViewModel = NewsListViewModel()
         NewsListScreen(newsListViewModel) { newsId ->
             selectedNewsId = newsId
+        }
+    } else {
+        val newsDetailViewModel = NewsDetailViewModel()
+        NewsDetailScreen(newsDetailViewModel, selectedNewsId!!) {
+            selectedNewsId = null
         }
     }
 }

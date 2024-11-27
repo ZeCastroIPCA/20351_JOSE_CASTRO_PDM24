@@ -15,7 +15,7 @@ class NewsRepositoryImpl(private val api: NewsApi) : NewsRepository {
 }
 
 class NewsDetailRepositoryImpl(private val api: NewsApi) : NewsDetailRepository {
-    override suspend fun getNewsDetail(): NewsDetail {
-        return api.getNewsDetail().toNewsDetail()
+    override suspend fun getNewsDetail(newsId: String): NewsDetail {
+        return api.getNewsDetail(newsId).toNewsDetail()
     }
 }

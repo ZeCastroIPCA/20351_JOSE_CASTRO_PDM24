@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.lang.reflect.Type
 
@@ -50,8 +51,9 @@ interface NewsApi {
         @Query("limit") limit: Int = 10
     ): ApiResponse
 
-    @GET("uuid/:id")
+    @GET("uuid/{id}")
     suspend fun getNewsDetail(
+        @Path("id") newsId: String,
         @Query("api_token") apiKey: String = API_KEY
     ): NewsDto
 }

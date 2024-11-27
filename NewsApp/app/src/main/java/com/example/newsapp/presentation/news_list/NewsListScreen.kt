@@ -1,6 +1,8 @@
 package com.example.newsapp.presentation.news_list
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,10 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.newsapp.domain.model.News
+import com.example.newsapp.presentation.news_detail.CustomLoadingWheel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,6 +36,7 @@ fun NewsListScreen(
     onNewsItemClick: (String) -> Unit
 ) {
     val news by newsListViewModel.news.collectAsState()
+    val isLoading by newsListViewModel.isLoading.collectAsState()
 
     LaunchedEffect(Unit) {
         newsListViewModel.fetchNews()
@@ -39,20 +44,41 @@ fun NewsListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("News") })
+            TopAppBar(title = { Text("Today's News") })
         }
     ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            items(news) { newsItem ->
-                NewsItemCard(
-                    news = newsItem,
-                    onClick = { onNewsItemClick(newsItem.id) }
-                )
+        if (isLoading) {
+            LoadingScreen()
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                items(news) { newsItem ->
+                    NewsItemCard(
+                        news = newsItem,
+                        onClick = { onNewsItemClick(newsItem.id) }
+                    )
+                }
             }
+        }
+    }
+}
+
+@Composable
+fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            CustomLoadingWheel()
+            Spacer(modifier = Modifier.height(16.dp))
+            Text("Loading news...")
         }
     }
 }
