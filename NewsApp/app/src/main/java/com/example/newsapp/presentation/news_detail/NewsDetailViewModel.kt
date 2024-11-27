@@ -15,8 +15,10 @@ class NewsDetailViewModel : ViewModel() {
     private val repository = NewsDetailRepositoryImpl(api)
     private val getNewsDetailUseCase = GetNewsDetailUseCase(repository)
 
+    // As a stateflow, news is mutable and can be updated
     var news = MutableStateFlow<NewsDetail?>(null)
 
+    // Fetch individual news
     fun fetchIndividualNews (newsId: String) {
         viewModelScope.launch {
             try {

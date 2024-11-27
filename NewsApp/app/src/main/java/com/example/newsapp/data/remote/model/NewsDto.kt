@@ -1,13 +1,14 @@
 package com.example.newsapp.data.remote.model
 
 import com.example.newsapp.domain.model.News
-import com.example.newsapp.domain.model.NewsDetail
 
+// Whole object structure of the API response
 data class ApiResponse(
     val meta: Meta,
     val data: List<NewsDto>
 )
 
+// Meta object structure of the API response
 data class Meta(
     val found: Int,
     val returned: Int,
@@ -15,7 +16,7 @@ data class Meta(
     val page: Int
 )
 
-
+// News object structure of the API response
 data class NewsDto(
     val uuid: String,
     val title: String,
@@ -26,21 +27,12 @@ data class NewsDto(
     val published_at: String,
     val source: String
 ) {
+    // Convert the NewsDto object to a News object
     fun toNews() : News {
         return News(
             id = uuid,
             title = title,
             description = description
-        )
-    }
-    fun toNewsDetail() : NewsDetail {
-        return NewsDetail(
-            id = uuid,
-            title = title,
-            description = description,
-            date = published_at,
-            imageUrl = image_url,
-            source = source
         )
     }
 }

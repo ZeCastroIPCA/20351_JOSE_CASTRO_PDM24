@@ -1,6 +1,5 @@
 package com.example.newsapp.presentation.news_detail
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,16 +35,19 @@ import com.example.newsapp.domain.model.NewsDetail
 
 @Composable
 fun NewsDetailScreen(
-    newsDetailViewModel: NewsDetailViewModel,
-    newsId: String,
-    onBackPressed: () -> Unit
+    newsDetailViewModel: NewsDetailViewModel, // ViewModel
+    newsId: String, // News ID
+    onBackPressed: () -> Unit // Back button
 ) {
+    // Fetch news detail as state
     val news by newsDetailViewModel.news.collectAsState()
 
+    // Fetch individual news on launch
     LaunchedEffect(newsId) {
         newsDetailViewModel.fetchIndividualNews(newsId)
     }
 
+    // Display news detail
     Column {
         Row(
             modifier = Modifier
@@ -66,6 +68,7 @@ fun NewsDetailScreen(
             )
         }
 
+        // Display news content or loading screen based on state
         when (val newsDetail = news) {
             null -> LoadingScreen()
             else -> NewsContent(newsDetail)
@@ -73,6 +76,7 @@ fun NewsDetailScreen(
     }
 }
 
+// Loading screen
 @Composable
 fun LoadingScreen() {
     Box(
@@ -90,6 +94,7 @@ fun LoadingScreen() {
     }
 }
 
+// Custom loading wheel
 @Composable
 fun CustomLoadingWheel() {
     Canvas(modifier = Modifier.size(50.dp)) {
@@ -115,6 +120,7 @@ fun CustomLoadingWheel() {
     }
 }
 
+// News content
 @Composable
 fun NewsContent(newsDetail: NewsDetail) {
     Column(
@@ -150,6 +156,7 @@ fun NewsContent(newsDetail: NewsDetail) {
                 style = MaterialTheme.typography.bodySmall
             )
             Text(
+                // Delete time from date
                 text = newsDetail.date.split("T")[0],
                 style = MaterialTheme.typography.bodySmall
             )

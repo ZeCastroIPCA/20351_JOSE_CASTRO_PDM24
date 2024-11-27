@@ -32,24 +32,30 @@ import com.example.newsapp.presentation.news_detail.CustomLoadingWheel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsListScreen(
-    newsListViewModel: NewsListViewModel,
-    onNewsItemClick: (String) -> Unit
+    newsListViewModel: NewsListViewModel, // ViewModel
+    onNewsItemClick: (String) -> Unit // Click for each news item
 ) {
+
+    // Collect the news and isLoading state from the ViewModel
     val news by newsListViewModel.news.collectAsState()
     val isLoading by newsListViewModel.isLoading.collectAsState()
 
+    // Fetch news when the screen is launched
     LaunchedEffect(Unit) {
         newsListViewModel.fetchNews()
     }
 
+    // Display the news list
     Scaffold(
         topBar = {
             TopAppBar(title = { Text("Today's News") })
         }
     ) { paddingValues ->
+        // Display loading screen if the news is still loading
         if (isLoading) {
             LoadingScreen()
         } else {
+            // Display the news list
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -66,6 +72,7 @@ fun NewsListScreen(
     }
 }
 
+// Display a loading screen while fetching news
 @Composable
 fun LoadingScreen() {
     Box(
@@ -83,6 +90,7 @@ fun LoadingScreen() {
     }
 }
 
+// Display each news item in a card
 @Composable
 fun NewsItemCard(
     news: News,
