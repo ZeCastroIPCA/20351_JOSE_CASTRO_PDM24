@@ -1,6 +1,7 @@
 package com.example.storeapp.data.repository
 
 import android.util.Log
+import com.example.storeapp.domain.enums.Roles
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.storeapp.domain.model.User
@@ -53,11 +54,12 @@ class UserRepository {
     suspend fun registerUser(user: Map<String, Any>) {
         try {
             val authResult = auth.createUserWithEmailAndPassword(user["email"].toString(), user["password"].toString()).await()
-            val userDataForFirestore = mapOf(
+            val userData = mapOf(
                 "name" to user["name"].toString(),
-                "email" to user["email"].toString()
+                "email" to user["email"].toString(),
+                "role" to Roles.USER,
             )
-            usersCollection.document(authResult.user?.uid ?: "").set(userDataForFirestore).await()
+            usersCollection.document(authResult.user?.uid ?: "").set(userData).await()
 
             Result.success(Unit)
         } catch (e: FirebaseAuthUserCollisionException) {
