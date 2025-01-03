@@ -4,51 +4,38 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.storeapp.presentation.news_detail.NewsDetailScreen
-import com.example.storeapp.presentation.news_detail.NewsDetailViewModel
-import com.example.storeapp.presentation.news_list.NewsListScreen
-import com.example.storeapp.presentation.news_list.NewsListViewModel
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import com.example.storeapp.presentation.AppNavHost
 import com.example.storeapp.ui.theme.NewsAppTheme
+import com.example.storeapp.viewmodel.AuthViewModel
+import com.example.storeapp.viewmodel.UserViewModel
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
+
+    private val authViewModel: AuthViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        FirebaseApp.initializeApp(this)
         setContent {
             NewsAppTheme {
-                MainScreen()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.White
+                ) {
+                    AppNavHost(
+                        authViewModel = authViewModel,
+                        userViewModel = userViewModel,
+                    )
+                }
             }
         }
-    }
-}
-
-@Composable
-fun MainScreen() {
-    var selectedNewsId by remember { mutableStateOf<String?>(null) }
-
-    if (selectedNewsId == null) {
-        val newsListViewModel = NewsListViewModel()
-        NewsListScreen(newsListViewModel) { newsId ->
-            selectedNewsId = newsId
-        }
-    } else {
-        val newsDetailViewModel = NewsDetailViewModel()
-        NewsDetailScreen(newsDetailViewModel, selectedNewsId!!) {
-            selectedNewsId = null
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    NewsAppTheme {
-        MainScreen()
     }
 }

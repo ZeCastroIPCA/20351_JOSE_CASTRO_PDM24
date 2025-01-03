@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "576899213997",
+    "project_id": "loja-online-e3052",
+    "storage_bucket": "loja-online-e3052.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576899213997:android:3562d70f59d66537767424",
+        "android_client_info": {
+          "package_name": "com.example.storeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLbGLx1kkqLi-XRoxdXWmfU564bhkhsAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
