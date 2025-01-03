@@ -13,12 +13,14 @@ import com.example.storeapp.ui.theme.NewsAppTheme
 import com.example.storeapp.viewmodel.AuthViewModel
 import com.example.storeapp.viewmodel.UserViewModel
 import com.example.storeapp.ui.AppNavHost
+import com.example.storeapp.viewmodel.ProductViewModel
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
 
     private val authViewModel: AuthViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
+    private val productViewModel: ProductViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     AppNavHost(
                         authViewModel = authViewModel,
                         userViewModel = userViewModel,
+                        productViewModel = productViewModel
                     )
                 }
             }

@@ -14,10 +14,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.storeapp.domain.enums.Roles
+import com.example.storeapp.navigation.Screen
 import com.example.storeapp.viewmodel.AuthViewModel
 import com.example.storeapp.viewmodel.UserViewModel
 
@@ -44,6 +49,8 @@ fun SettingsScreen(
     LaunchedEffect(Unit) {
         userViewModel.getCurrentUser()
     }
+
+    var cartCode by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -95,7 +102,7 @@ fun SettingsScreen(
                     )
                     Button(
                         onClick = {
-                            navController.navigate("products")
+                            navController.navigate(Screen.Products.route)
                         },
                         shape = RoundedCornerShape(4.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
@@ -106,6 +113,40 @@ fun SettingsScreen(
                     ) {
                         Text(text = "Ver Produtos", color = Color.White, fontWeight = FontWeight.Bold)
                     }
+                }
+            }
+
+            Column (
+                modifier = Modifier.fillMaxWidth().padding(16.dp)
+            ) {
+                Text(
+                    text = "Encontrar Carrinho",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                TextField(
+                    value = cartCode,
+                    onValueChange = {
+                        cartCode = it
+                    },
+                    label = { Text("Código do Carrinho") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                )
+                Button(
+                    onClick = {
+                        navController.navigate(Screen.Cart.route + "/$cartCode")
+                    },
+                    shape = RoundedCornerShape(4.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp, top = 8.dp)
+                        .height(50.dp)
+                ) {
+                    Text(text = "Ver Carrinho", color = Color.White, fontWeight = FontWeight.Bold)
                 }
             }
         }

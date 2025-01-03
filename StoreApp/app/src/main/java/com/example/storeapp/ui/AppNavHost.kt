@@ -17,7 +17,9 @@ import com.example.storeapp.navigation.Screen
 import com.example.storeapp.ui.components.BottomNavigationBar
 import com.example.storeapp.ui.screens.SettingsScreen
 import com.example.storeapp.ui.screens.SignUpScreen
+import com.example.storeapp.ui.screens.products.ProductsScreen
 import com.example.storeapp.viewmodel.AuthViewModel
+import com.example.storeapp.viewmodel.ProductViewModel
 import com.example.storeapp.viewmodel.UserViewModel
 import com.grupo1.lojasocial.ui.screens.HomeScreen
 import com.grupo1.lojasocial.ui.screens.LoginScreen
@@ -27,6 +29,7 @@ import com.grupo1.lojasocial.ui.screens.SearchScreen
 fun AppNavHost(
     authViewModel: AuthViewModel,
     userViewModel: UserViewModel,
+    productViewModel: ProductViewModel
 ) {
     val navController = rememberNavController()
 
@@ -124,12 +127,27 @@ fun AppNavHost(
                 )
             }*/
 
+            /*composable(Screen.Cart.route + "/{cartCode}") { backStackEntry ->
+                val cartCode = backStackEntry.arguments?.getString("cartCode")
+                CartScreen(
+                    navController,
+                    cartCode = cartCode ?: ""
+                )
+            }*/
+
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     navController,
                     authViewModel,
                     userViewModel,
                     onLogout = { navController.navigate(Screen.Login.route) }
+                )
+            }
+
+            composable(Screen.Products.route) {
+                ProductsScreen(
+                    navController,
+                    productViewModel
                 )
             }
         }
