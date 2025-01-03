@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.storeapp.navigation.Screen
 import com.example.storeapp.ui.components.BottomNavigationBar
+import com.example.storeapp.ui.screens.SettingsScreen
 import com.example.storeapp.ui.screens.SignUpScreen
 import com.example.storeapp.viewmodel.AuthViewModel
 import com.example.storeapp.viewmodel.UserViewModel
@@ -43,6 +44,7 @@ fun AppNavHost(
                             Screen.Home,
                             Screen.Search,
                             Screen.Cart,
+                            Screen.Settings
                         )
                     )
                 }
@@ -121,6 +123,15 @@ fun AppNavHost(
                     navController,
                 )
             }*/
+
+            composable(Screen.Settings.route) {
+                SettingsScreen(
+                    navController,
+                    authViewModel,
+                    userViewModel,
+                    onLogout = { navController.navigate(Screen.Login.route) }
+                )
+            }
         }
     }
 }
