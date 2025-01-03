@@ -1,5 +1,6 @@
 package com.example.storeapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.storeapp.data.repository.UserRepository
@@ -18,10 +19,11 @@ class UserViewModel(
         getCurrentUser()
     }
 
-    private fun getCurrentUser() {
+    fun getCurrentUser() {
         viewModelScope.launch {
             val email = userRepository.getCurrentUserEmail()
             val user = userRepository.getUserByEmail(email)
+            Log.d("UserViewModel", "Retrieved user: $user")
             _currentUser.value = user
         }
     }
@@ -30,14 +32,22 @@ class UserViewModel(
         name: String,
         email: String,
         password: String,
+        onRegisterSuccess: () -> Unit,
+        onError: (String) -> Unit
     ) {
-        val user = mapOf(
-            "name" to name,
-            "email" to email,
-            "password" to password,
-        )
         viewModelScope.launch {
-            userRepository.registerUser(user)
+            try {
+                val user = mapOf(
+                    "name" to name,
+                    "email" to email,
+                    "password" to password,
+                )
+                userRepository.registerUser(user)
+                onRegisterSuccess()
+            } catch (e: Exception) {
+                Log.e("UserViewModel", "Error registering user: ${e.message}")
+                onError(e.message ?: "An unknown error occurred.")
+            }
         }
     }
 

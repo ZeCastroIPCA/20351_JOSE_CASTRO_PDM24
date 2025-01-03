@@ -30,6 +30,7 @@ fun HomeScreen(
     val currentUser by userViewModel.currentUser.collectAsState()
 
     LaunchedEffect(Unit) {
+        userViewModel.getCurrentUser()
     }
 
     Scaffold(
@@ -43,11 +44,15 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Top
         ) {
-            Text(
-                text = "Olá,\n${currentUser?.name ?: ""}",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+            if (currentUser != null) {
+                Text(
+                    text = "Olá,\n${currentUser?.name ?: ""}",
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            } else {
+                Text(text = "Loading...")
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 

@@ -10,7 +10,8 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val authRepository: AuthRepository = AuthRepository(),
-    private val userRepository: UserRepository = UserRepository()
+    private val userRepository: UserRepository = UserRepository(),
+    private val userViewModel: UserViewModel = UserViewModel(userRepository)
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<Result<Unit>?>(null)
@@ -29,6 +30,7 @@ class AuthViewModel(
 
                 if (result.isSuccess) {
                     _isLoggedIn.value = true
+                    userViewModel.getCurrentUser()
                 }
             }
         }

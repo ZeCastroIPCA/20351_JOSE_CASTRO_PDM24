@@ -87,6 +87,39 @@ It was the second project that I worked on in the class. It served as a good int
 #### News Detail
 ![News Detail](./readme_images/news_detail.png)
 ---
+### Online Store App
+This is an online store app that fetches products from a firestore database, displays them in a list, allows the user to add them to a cart, share the cart, login and register in the app.
+### ⚠️ Disclaimer
+This project has the google-services.json file included in the repository for reproduction purposes. This file should not be included in the repository in a real project. It contains sensitive information that should not be shared publicly.
+### Introduction
+This was the third project that I worked on in the class. It served as a good introduction to working with Firestore in Android Studio and implementing user authentication.
+### Limitations
+- The app doesn't have a payment system.
+- The app doesn't have a feature to edit the user's profile.
+- The app doesn't have a feature to view the user's order history.
+- The app doesn't have a feature to view the user's wishlist.
+
+### File Structure
+<!-- TODO: Add file structure -->
+
+### Features
+- Fetches products from a Firestore database.
+- Displays products in a list.
+- Allows the user to search for products.
+- Allows the user to add products to a cart.
+- Allows the user to share the cart.
+- Allows the user to login and register in the app.
+
+### Screenshots
+#### Product List
+<!--![Product List](./readme_images/product_list.png)-->
+#### Product Detail
+<!--![Product Detail](./readme_images/product_detail.png)-->
+#### Cart
+<!--![Cart](./readme_images/cart.png)-->
+#### Share Cart
+<!--![Share Cart](./readme_images/share_cart.png)-->
+---
 ## How to Run
 1. Clone the repository.
 2. Open the project you want to run in Android Studio.

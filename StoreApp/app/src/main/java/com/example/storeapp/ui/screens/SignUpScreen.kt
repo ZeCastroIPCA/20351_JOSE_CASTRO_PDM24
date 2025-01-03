@@ -26,12 +26,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.storeapp.navigation.Screen
-import com.example.storeapp.viewmodel.UserViewModel
+import com.example.storeapp.utils.emailValidation
+import com.example.storeapp.utils.nameValidation
 
 @Composable
 fun SignUpScreen(
     navController: NavController,
-    onSignUpClick: (String, String, String) -> Unit
+    onSignUpClick: (String, String, String) -> Unit,
+    errorMessage: String? = null
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -81,7 +83,7 @@ fun SignUpScreen(
             onClick = {
                 onSignUpClick(name, email, password)
             },
-            enabled = name.isNotEmpty() && email.isNotEmpty() && password.length >= 6,
+            enabled = name.isNotEmpty() && nameValidation(name.trim()) && email.isNotEmpty() && emailValidation(email.trim()) && password.length >= 6,
             shape = RoundedCornerShape(4.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
             modifier = Modifier
@@ -98,5 +100,13 @@ fun SignUpScreen(
         ) {
             Text("Já tem conta? Iniciar Sessão", color = Color.Black)
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            errorMessage ?: "",
+            color = MaterialTheme.colorScheme.error,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }

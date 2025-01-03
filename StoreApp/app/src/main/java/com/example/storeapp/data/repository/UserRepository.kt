@@ -1,8 +1,10 @@
 package com.example.storeapp.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.storeapp.domain.model.User
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.tasks.await
 
 class UserRepository {
@@ -50,12 +52,18 @@ class UserRepository {
 
     suspend fun registerUser(user: Map<String, Any>) {
         try {
-            usersCollection.add(user).await()
+            val authResult = auth.createUserWithEmailAndPassword(user["email"].toString(), user["password"].toString()).await()
+            val userDataForFirestore = mapOf(
+                "name" to user["name"].toString(),
+                "email" to user["email"].toString()
+            )
+            usersCollection.document(authResult.user?.uid ?: "").set(userDataForFirestore).await()
 
-            auth.createUserWithEmailAndPassword(user["email"].toString(), user["password"].toString()).await()
             Result.success(Unit)
+        } catch (e: FirebaseAuthUserCollisionException) {
+            throw Exception("Este email já pertence a uma conta. Por favor, insira um email diferente!")
         } catch (e: Exception) {
-            Result.failure(e)
+            throw Exception("Erro ao registrar o utilizador: ${e.message}")
         }
     }
 

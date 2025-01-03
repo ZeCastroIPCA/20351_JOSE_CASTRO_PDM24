@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.storeapp.presentation.AppNavHost
 import com.example.storeapp.ui.theme.NewsAppTheme
 import com.example.storeapp.viewmodel.AuthViewModel
 import com.example.storeapp.viewmodel.UserViewModel
+import com.example.storeapp.ui.AppNavHost
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
